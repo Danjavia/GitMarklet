@@ -93,8 +93,8 @@ export default class DashboardPage extends Component {
         user: res.data ? res.data.user : null,
         repos: res.data && res.data.user && res.data.user.repositories ? res.data.user.repositories : [],
         loading: false
-      })
-    })
+      });
+    });
   }
 
   /**
