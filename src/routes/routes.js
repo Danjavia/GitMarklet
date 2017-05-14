@@ -8,7 +8,7 @@ import { Route, Switch } from 'react-router-dom';
  * Internal Resources
  **/
 import HomePage from '../pages/HomePage/HomePage';
-import LoginPage from '../pages/LoginPage/LoginPage';
+import LoginPage from '../pages/LoginPage/mutations/LoginPage';
 import SignupPage from '../pages/SignupPage/mutations/SignupPage';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
 import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';

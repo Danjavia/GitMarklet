@@ -2,12 +2,14 @@
  * External Resources
  **/
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import Form from 'antd/lib/form';
 import Input from 'antd/lib/input';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import Button from 'antd/lib/button';
+import notification from 'antd/lib/notification';
+import StorageManager from '../../services/StorageManager';
 
 /**
  * constants
@@ -31,13 +33,29 @@ class LoginPage extends Component {
    * */
   handleSubmit(e) {
     e.preventDefault();
+    console.log(this.props);
+    const {mutate} = this.props;
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (err) {
         return;
       }
 
-      console.log(values);
+      const variables = {
+        ...values
+      };
+
+      mutate({variables}).then(({data}) => {
+
+        StorageManager.update('access_token', data.signinUser.token);
+        this.props.history.push('/dashboard');
+
+      }).catch((err) => {
+        notification['error']({
+          message: 'Check fields again',
+          description: 'No user found with that information',
+        });
+      });
     });
   }
 
@@ -125,4 +143,4 @@ class LoginPage extends Component {
  **/
 const LoginPageForm = Form.create()(LoginPage);
 
-export default LoginPageForm;
+export default withRouter(LoginPageForm);

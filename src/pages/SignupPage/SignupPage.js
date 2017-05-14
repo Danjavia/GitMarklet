@@ -48,12 +48,11 @@ class SignupPage extends Component {
       createUser({variables}).then(({data}) => {
         delete variables.username;
 
-        console.log(data, variables);
-
         signinUser({variables}).then(({data}) => {
           StorageManager.update('access_token', data.signinUser.token);
           this.props.history.push('/dashboard');
         });
+
       }).catch((err) => {
         notification['error']({
           message: 'Check fields again',
