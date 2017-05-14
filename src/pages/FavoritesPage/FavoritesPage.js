@@ -2,13 +2,14 @@
  * External Resources
  **/
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import Input from 'antd/lib/input';
 import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
 import Tag from 'antd/lib/tag';
 import Icon from 'antd/lib/icon';
 import Affix from 'antd/lib/affix';
+import StorageManager from '../../services/StorageManager';
 
 /**
  * Internal Resources
@@ -19,7 +20,7 @@ import './FavoritesPage.css';
 /**
  * Sample class definition
  **/
-export default class FavoritesPage extends Component {
+class FavoritesPage extends Component {
 
   constructor(props) {
     super(props);
@@ -97,6 +98,15 @@ export default class FavoritesPage extends Component {
   }
 
   /**
+   * logout:
+   * Finish user session
+   * */
+  logout() {
+    StorageManager.clear();
+    this.props.history.push('/');
+  }
+
+  /**
    * render
    * @return {ReactElement} markup
    * */
@@ -110,7 +120,7 @@ export default class FavoritesPage extends Component {
             <div className="favorites-page__search">
               <nav>
                 <Link to="/dashboard">Dashboard</Link>
-                <Link to="/">Logout</Link>
+                <Link to="/" onClick={this.logout.bind(this)}>Logout</Link>
               </nav>
               <h1>My Favorites</h1>
               <Input placeholder="Enter repository name" ref="gitUser" />
@@ -159,3 +169,5 @@ export default class FavoritesPage extends Component {
     );
   }
 }
+
+export default withRouter(FavoritesPage);

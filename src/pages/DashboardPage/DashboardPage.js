@@ -9,6 +9,7 @@ import Card from 'antd/lib/card';
 import Tag from 'antd/lib/tag';
 import Icon from 'antd/lib/icon';
 import Affix from 'antd/lib/affix';
+import StorageManager from '../../services/StorageManager';
 
 /**
  * Internal Resources
@@ -97,6 +98,15 @@ export default class DashboardPage extends Component {
   }
 
   /**
+   * logout:
+   * Finish user session
+   * */
+  logout() {
+    StorageManager.clear();
+    this.props.history.push('/');
+  }
+
+  /**
    * render
    * @return {ReactElement} markup
    * */
@@ -110,7 +120,7 @@ export default class DashboardPage extends Component {
             <div className="dashboard-page__search">
               <nav>
                 <Link to="/favorites">Favorites</Link>
-                <Link to="/">Logout</Link>
+                <Link to="/" onClick={this.logout.bind(this)}>Logout</Link>
               </nav>
               <h1>GitMarklet</h1>
               <Input placeholder="Enter github username" ref="gitUser" />
