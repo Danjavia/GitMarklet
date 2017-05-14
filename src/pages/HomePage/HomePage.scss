@@ -1,6 +1,13 @@
 .home-page {
   margin: auto;
 
+  nav {
+    position: absolute;
+    top: 30px;
+    right: 100px;
+    font-size: 16px;
+  }
+
   &__hero {
     position: relative;
     display: flex;
@@ -47,7 +54,7 @@
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 20px;
+    padding:  20px 40px;
 
     .custom-card {
       padding: 10px 16px;

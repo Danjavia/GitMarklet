@@ -2,6 +2,7 @@
  * External Resources
  **/
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import Input from 'antd/lib/input';
 import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
@@ -107,6 +108,9 @@ export default class HomePage extends Component {
         <div className="home-page">
           <div className="home-page__hero">
             <div className="home-page__search">
+              <nav>
+                <Link to="/login">Login</Link>
+              </nav>
               <h1>GitMarklet</h1>
               <Input placeholder="Enter github username" ref="gitUser" />
               <Button onClick={this.searchRepos.bind(this)}>View Repositories</Button>
