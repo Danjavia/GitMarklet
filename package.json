@@ -1,0 +1,34 @@
+{
+  "name": "starterpack",
+  "version": "1.0.0",
+  "devDependencies": {
+    "node-sass": "^4.5.0",
+    "react-scripts": "^0.9.5",
+    "sw-precache": "^5.1.1"
+  },
+  "dependencies": {
+    "antd": "^2.9.1",
+    "apollo-client": "^1.0.0",
+    "enzyme": "^2.7.1",
+    "graphql-tag": "^1.2.4",
+    "npm-run-all": "^4.0.1",
+    "pouchdb-browser": "^6.1.2",
+    "react": "^15.4.1",
+    "react-apollo": "^1.0.1",
+    "react-dom": "^15.4.1",
+    "react-router-dom": "^4.1.1",
+    "react-test-renderer": "^15.4.2"
+  },
+  "scripts": {
+    "build-css": "node-sass src/ -o src/",
+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch",
+    "start-js": "sh -ac '. .env.local; react-scripts start'",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && sh -ac '. .env.${REACT_APP_ENV}; react-scripts build' && cp manifest.json build/ && sw-precache --root='build/' --static-file-globs='build/**/!(*map*)'",
+    "build:staging": "REACT_APP_ENV=staging npm run build",
+    "build:production": "REACT_APP_ENV=production npm run build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "homepage": "./"
+}

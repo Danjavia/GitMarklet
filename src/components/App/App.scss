@@ -1,0 +1,21 @@
+body {
+  min-height: 100vh;
+
+  .container {
+    min-height: 93vh;
+  }
+
+  .ant-tag {
+    line-height: 14px;
+    font-size: 10px;
+    height: 16px;
+    margin-right: 0!important;
+  }
+
+  .flex {
+    display: flex;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+  }
+}
