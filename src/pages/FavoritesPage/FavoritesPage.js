@@ -119,7 +119,7 @@ class FavoritesPage extends Component {
           <div className="favorites-page__hero">
             <div className="favorites-page__search">
               <nav>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/dashboard">Search Repos</Link>
                 <Link to="/" onClick={this.logout.bind(this)}>Logout</Link>
               </nav>
               <h1>My Favorites</h1>
