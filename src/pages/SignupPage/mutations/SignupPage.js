@@ -25,7 +25,30 @@ const createUser = gql`
         password: $password
       }
     }) {
-      username
+      email
+      password
+    }
+  }
+`;
+
+/**
+ * signinUser
+ * */
+const signinUser = gql`
+  mutation SigninUser(
+  $email: String!,
+  $password: String!
+  ) {
+    signinUser(
+      email: {
+        email: $email,
+        password: $password
+      }
+    ) {
+      token
+      user {
+        username
+      }
     }
   }
 `;
@@ -33,6 +56,12 @@ const createUser = gql`
 /**
  * createPaymentForm
  * */
-const SignupPageForm = graphql(createUser)(SignupPage);
+const SignupPageForm = graphql(createUser, {
+  name: 'createUser'
+})(
+  graphql(signinUser, {
+    name: 'signinUser'
+  })(SignupPage)
+);
 
 export default SignupPageForm;

@@ -9,6 +9,7 @@ import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import Button from 'antd/lib/button';
 import notification from 'antd/lib/notification';
+import StorageManager from '../../services/StorageManager';
 
 /**
  * constants
@@ -32,8 +33,8 @@ class SignupPage extends Component {
    * */
   handleSubmit(e) {
     e.preventDefault();
-
-    const {mutate, form} = this.props;
+    console.log(this.props);
+    const {createUser, signinUser} = this.props;
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (err) {
@@ -44,11 +45,14 @@ class SignupPage extends Component {
         ...values
       };
 
-      console.log(variables);
+      createUser({variables}).then(({data}) => {
+        delete variables.username;
 
-      mutate({variables}).then(({data}) => {
-        console.log(data);
-        form.resetFields();
+        console.log(data, variables);
+
+        signinUser({variables}).then(({data}) => {
+          StorageManager.update('access_token', data.signinUser.token);
+        });
       }).catch((err) => {
         notification['error']({
           message: 'Check fields again',
