@@ -2,7 +2,7 @@
  * External Resources
  **/
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import Form from 'antd/lib/form';
 import Input from 'antd/lib/input';
 import Row from 'antd/lib/row';
@@ -52,6 +52,7 @@ class SignupPage extends Component {
 
         signinUser({variables}).then(({data}) => {
           StorageManager.update('access_token', data.signinUser.token);
+          this.props.history.push('/dashboard');
         });
       }).catch((err) => {
         notification['error']({
@@ -167,4 +168,4 @@ class SignupPage extends Component {
  **/
 const SignupPageForm = Form.create()(SignupPage);
 
-export default SignupPageForm;
+export default withRouter(SignupPageForm);
