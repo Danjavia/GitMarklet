@@ -11,7 +11,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import LoginPage from '../pages/LoginPage/mutations/LoginPage';
 import SignupPage from '../pages/SignupPage/mutations/SignupPage';
 import DashboardPage from '../pages/DashboardPage/mutations/DashboardPage';
-import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
+import FavoritesPageContainer from '../pages/FavoritesPage/FavoritesPageContainer';
 import Footer from '../components/Footer/Footer';
 import NotFound from '../pages/NotFound/NotFound';
 
@@ -26,7 +26,7 @@ export default () => (
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/signup" component={SignupPage} />
       <Route exact path="/dashboard" component={DashboardPage} />
-      <Route exact path="/favorites" component={FavoritesPage} />
+      <Route exact path="/favorites" component={FavoritesPageContainer} />
       <Route component={NotFound} />
     </Switch>
 

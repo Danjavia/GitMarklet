@@ -8,7 +8,6 @@ import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
 import Tag from 'antd/lib/tag';
 import Icon from 'antd/lib/icon';
-import Affix from 'antd/lib/affix';
 import StorageManager from '../../services/StorageManager';
 
 /**
@@ -113,6 +112,14 @@ class FavoritesPage extends Component {
   render() {
     const avatar = this.state.user && this.state.user.avatarUrl ? this.state.user.avatarUrl : 'https://s-media-cache-ak0.pinimg.com/originals/1c/7f/f6/1c7ff63a835410d8b31bce5f823cd401.jpg';
 
+    if (this.props.data.loading) {
+      return (<div className="flex"><h2>Loading your favorites...</h2></div>);
+    }
+
+    if (this.props.data.error) {
+      return (<div>Upps, sorry the service is unavailable at this moment. Please check later.</div>);
+    }
+
     return (
       <App>
         <div className="favorites-page">
@@ -128,42 +135,26 @@ class FavoritesPage extends Component {
             </div>
           </div>
 
-          {this.state.loading ?
-            <div className="flex"><h2>Loading...</h2></div> :
-            this.state.user && this.state.user.repositories ? <div className="favorites-page__results">
-              <section className="favorites-page__repos">
-                {this.state.repos.edges ? this.state.repos.edges.map((repo, key) => {
-                    repo = repo.node;
-                    return (
-                      <Card style={{ width: '30%', margin: 10 }} bodyStyle={{ padding: 0 }} key={key}>
-                        <div className="custom-card">
-                          <div className="favorites-page__tags">
-                            {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
-                            <Icon type="heart-o" />
-                          </div>
-                          <h3>
-                            <a href={repo.url} target="_blank">{repo.name}</a>
-                          </h3>
-                          <p>{repo.description || 'This repo have not description.'}</p>
-                        </div>
-                      </Card>
-                    );
-                  }) : null}
-              </section>
-
-              <Affix offsetTop={120} style={{width: '35%'}}>
-                <aside className="favorites-page__user">
-                  {this.state.user.avatarUrl && <img src={avatar} alt="avatar" className="favorites-page__avatar"/>}
-                  <div className="favorites-page__user__info">
-                    <h4>{this.state.user.name}</h4>
-                    <div>{this.state.user.bio}</div>
-                    {this.state.user.starredRepositories && <span> <Icon type="star-o" /> {this.state.user.starredRepositories.totalCount}</span>}
-                    {this.state.user.followers && <span> <Icon type="heart-o" /> {this.state.user.followers.totalCount}</span>}
-                    {this.state.user.websiteUrl && <span> <Icon type="global" /> <a href={this.state.user.websiteUrl} target="_blank">Website</a></span>}
-                  </div>
-                </aside>
-              </Affix>
-            </div> : this.state.user == null ? <div className="flex"><h2>User doesn't exist at Github</h2></div> : <div className="flex"><h2>No repos yet</h2></div>}
+          <div className="favorites-page__results">
+            <section className="favorites-page__repos">
+              {this.props.data.User.favorites ? this.props.data.User.favorites.map((repo, key) => {
+                return (
+                  <Card style={{ width: '22.3%', margin: 10 }} bodyStyle={{ padding: 0 }} key={key}>
+                    <div className="custom-card">
+                      <div className="favorites-page__tags">
+                        {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
+                        <Icon type="heart" />
+                      </div>
+                      <h3>
+                        <a href={repo.url} target="_blank">{repo.name}</a>
+                      </h3>
+                      <p>{repo.description || 'This repo have not description.'}</p>
+                    </div>
+                  </Card>
+                );
+              }) : null}
+            </section>
+          </div>
         </div>
       </App>
     );

@@ -3,24 +3,29 @@
  * */
 import { withRouter } from 'react-router-dom';
 import { graphql } from 'react-apollo';
+import StorageManager from '../../services/StorageManager';
 
 // Query
-import HomePageQuery from './queries/HomePageQuery';
+import FavoritesPageQuery from './queries/FavoritesPageQuery';
+
 // Component
-import HomePage from './HomePage';
+// import BlackListButton from './mutations/BlackListButton';
+import FavoritesPage from './FavoritesPage';
 
 /**
- * PreliminarInfoDataContainer
- * @const {func} PreliminarInfoDataContainer Method for fetching data from server to the component.
+ * BlackListButtonContainer
+ * @const {func} BlackListButtonContainer Method for fetching data from server to the component.
  * */
-const ActivityRecordContainer = graphql(HomePageQuery, {
+const BlackListButtonContainer = graphql(FavoritesPageQuery, {
   options: (ownProps) => {
+    console.log(ownProps);
     return {
       variables: {
-        username: ownProps.username
+        id: StorageManager.get('uid')
       }
     }
   }
-})(withRouter(HomePage));
+})(withRouter(FavoritesPage));
 
-export default ActivityRecordContainer;
+export default BlackListButtonContainer;
+

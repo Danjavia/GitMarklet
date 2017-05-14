@@ -62,7 +62,7 @@
 
   &__results {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     box-sizing: border-box;
     padding:  20px 40px;
 
@@ -76,7 +76,8 @@
 
   &__repos {
     display: flex;
-    flex: 0 0 65%;
+    justify-content: flex-start;
+    flex: 0 0 80%;
     flex-wrap: wrap;
   }
 
@@ -88,19 +89,6 @@
     i {
       cursor: pointer;
       font-size: 16px;
-    }
-  }
-
-  &__user {
-    position: relative;
-    flex: 0 0 100%;
-    border-radius: 4px;
-    box-sizing: border-box;
-    padding: 10px;
-    text-align: center;
-
-    &__info {
-      margin-top: 100px;
     }
   }
 }
