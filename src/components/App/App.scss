@@ -2,7 +2,7 @@ body {
   min-height: 100vh;
 
   .container {
-    min-height: 93vh;
+    min-height: calc(93vh - 7px);
   }
 
   .ant-tag {
@@ -14,7 +14,7 @@ body {
 
   .flex {
     display: flex;
-    height: 50vh;
+    height: calc(50vh - 10px);
     justify-content: center;
     align-items: center;
   }

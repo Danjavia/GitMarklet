@@ -1,0 +1,26 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  min-height: calc(93vh - 7px);
+
+  nav {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+  }
+
+  &__form {
+    width: 320px;
+    border-radius: 4px;
+    border: 1px solid #e6e6e6;
+    box-sizing: border-box;
+    padding: 15px;
+    box-shadow: 0 0 5px #e5e5e5;
+
+    h2 {
+      margin-bottom: 15px;
+    }
+  }
+}

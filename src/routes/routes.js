@@ -8,7 +8,8 @@ import { Route, Switch } from 'react-router-dom';
  * Internal Resources
  **/
 import HomePage from '../pages/HomePage/HomePage';
-import VehicleTypePage from '../pages/VehicleTypePage/VehicleTypePage';
+import LoginPage from '../pages/LoginPage/LoginPage';
+import SignupPage from '../pages/SignupPage/SignupPage';
 import Footer from '../components/Footer/Footer';
 import NotFound from '../pages/NotFound/NotFound';
 
@@ -20,7 +21,8 @@ export default () => (
 
     <Switch>
       <Route exact path="/" component={HomePage} />
-      <Route exact path="/tipo-vehiculo" component={VehicleTypePage} />
+      <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/signup" component={SignupPage} />
       <Route component={NotFound} />
     </Switch>
 
