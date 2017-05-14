@@ -8,6 +8,7 @@ import Input from 'antd/lib/input';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import Button from 'antd/lib/button';
+import notification from 'antd/lib/notification';
 
 /**
  * constants
@@ -50,7 +51,10 @@ class SignupPage extends Component {
 
         form.resetFields();
       }).catch((err) => {
-        console.log(err);
+        notification['error']({
+          message: 'Check fields again',
+          description: 'User already exists with that information',
+        });
       });
     });
   }
