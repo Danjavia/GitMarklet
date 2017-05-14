@@ -25,11 +25,19 @@ export default class HomePage extends Component {
 
     this.state = {
       user: {},
-      repos: []
+      repos: [],
+      loading: false
     }
   }
 
   searchRepos() {
+
+    if (this.refs.gitUser.refs.input.value === '') {
+      return;
+    }
+
+    this.setState({loading: true});
+
     // Assign user for get their repos
     const gitUSer = this.refs.gitUser.refs.input.value;
 
@@ -81,7 +89,8 @@ export default class HomePage extends Component {
       console.log(res);
       this.setState({
         user: res.data ? res.data.user : null,
-        repos: res.data && res.data.user && res.data.user.repositories ? res.data.user.repositories : []
+        repos: res.data && res.data.user && res.data.user.repositories ? res.data.user.repositories : [],
+        loading: false
       })
     })
   }
@@ -104,39 +113,41 @@ export default class HomePage extends Component {
             </div>
           </div>
 
-          { this.state.user && this.state.user.repositories ? <div className="home-page__results">
-            <section className="home-page__repos">
-              {this.state.repos.edges ? this.state.repos.edges.map((repo, key) => {
-                repo = repo.node;
-                return (
-                  <Card style={{ width: '30%', margin: 10 }} bodyStyle={{ padding: 0 }} key={key}>
-                    <div className="custom-card">
-                      <div className="home-page__tags">
-                        {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
-                      </div>
-                      <h3>
-                        <a href={repo.url}>{repo.name}</a>
-                      </h3>
-                      <p>{repo.description || 'This repo have not description.'}</p>
-                    </div>
-                  </Card>
-                );
-              }) : null}
-            </section>
+          {this.state.loading ?
+            <div className="flex"><h2>Loading...</h2></div> :
+            this.state.user && this.state.user.repositories ? <div className="home-page__results">
+              <section className="home-page__repos">
+                {this.state.repos.edges ? this.state.repos.edges.map((repo, key) => {
+                    repo = repo.node;
+                    return (
+                      <Card style={{ width: '30%', margin: 10 }} bodyStyle={{ padding: 0 }} key={key}>
+                        <div className="custom-card">
+                          <div className="home-page__tags">
+                            {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
+                          </div>
+                          <h3>
+                            <a href={repo.url} target="_blank">{repo.name}</a>
+                          </h3>
+                          <p>{repo.description || 'This repo have not description.'}</p>
+                        </div>
+                      </Card>
+                    );
+                  }) : null}
+              </section>
 
-            <Affix offsetTop={120} style={{width: '35%'}}>
-              <aside className="home-page__user">
-                {this.state.user.avatarUrl && <img src={avatar} alt="avatar" className="home-page__avatar"/>}
-                <div className="home-page__user__info">
-                  <h4>{this.state.user.name}</h4>
-                  <div>{this.state.user.bio}</div>
-                  {this.state.user.starredRepositories && <span> <Icon type="star-o" /> {this.state.user.starredRepositories.totalCount}</span>}
-                  {this.state.user.followers && <span> <Icon type="heart-o" /> {this.state.user.followers.totalCount}</span>}
-                  {this.state.user.websiteUrl && <span> <Icon type="global" /> <a href={this.state.user.websiteUrl} target="_blank">Website</a></span>}
-                </div>
-              </aside>
-            </Affix>
-          </div> : this.state.user == null ? <div className="flex"><h2>User doesn't exist at Github</h2></div> : <div className="flex"><h2>No repos yet</h2></div>}
+              <Affix offsetTop={120} style={{width: '35%'}}>
+                <aside className="home-page__user">
+                  {this.state.user.avatarUrl && <img src={avatar} alt="avatar" className="home-page__avatar"/>}
+                  <div className="home-page__user__info">
+                    <h4>{this.state.user.name}</h4>
+                    <div>{this.state.user.bio}</div>
+                    {this.state.user.starredRepositories && <span> <Icon type="star-o" /> {this.state.user.starredRepositories.totalCount}</span>}
+                    {this.state.user.followers && <span> <Icon type="heart-o" /> {this.state.user.followers.totalCount}</span>}
+                    {this.state.user.websiteUrl && <span> <Icon type="global" /> <a href={this.state.user.websiteUrl} target="_blank">Website</a></span>}
+                  </div>
+                </aside>
+              </Affix>
+            </div> : this.state.user == null ? <div className="flex"><h2>User doesn't exist at Github</h2></div> : <div className="flex"><h2>No repos yet</h2></div>}
         </div>
       </App>
     );
