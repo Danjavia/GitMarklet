@@ -98,6 +98,25 @@ export default class DashboardPage extends Component {
   }
 
   /**
+   * saveAsFavorite
+   * Save repo as favorite in saas
+   * @param {object} repo repo object data
+   * */
+  saveAsFavorite(repo) {
+    const {mutate} = this.props;
+    const variables = {
+      userId: StorageManager.get('uid'),
+      ...repo
+    };
+
+    mutate({variables}).then(({data}) => {
+      console.log(data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  /**
    * logout:
    * Finish user session
    * */
@@ -123,6 +142,7 @@ export default class DashboardPage extends Component {
                 <Link to="/" onClick={this.logout.bind(this)}>Logout</Link>
               </nav>
               <h1>GitMarklet</h1>
+              <p>Insert a github username for getting his repositories.</p>
               <Input placeholder="Enter github username" ref="gitUser" />
               <Button onClick={this.searchRepos.bind(this)}>View Repositories</Button>
             </div>
@@ -141,9 +161,7 @@ export default class DashboardPage extends Component {
                             {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
                             <Icon
                               type="heart-o"
-                              onClick={() => {
-                                console.log(repo);
-                              }}
+                              onClick={this.saveAsFavorite.bind(this, repo)}
                             />
                           </div>
                           <h3>
