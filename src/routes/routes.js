@@ -9,7 +9,7 @@ import { Route, Switch } from 'react-router-dom';
  **/
 import HomePage from '../pages/HomePage/HomePage';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import SignupPage from '../pages/SignupPage/SignupPage';
+import SignupPage from '../pages/SignupPage/mutations/SignupPage';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
 import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
 import Footer from '../components/Footer/Footer';

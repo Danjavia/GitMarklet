@@ -32,12 +32,26 @@ class SignupPage extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
+    const {mutate, form} = this.props;
+
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (err) {
         return;
       }
 
-      console.log(values);
+      const variables = {
+        ...values
+      };
+
+      console.log(variables);
+
+      mutate({variables}).then(({data}) => {
+        console.log(data);
+
+        form.resetFields();
+      }).catch((err) => {
+        console.log(err);
+      });
     });
   }
 
@@ -54,6 +68,8 @@ class SignupPage extends Component {
       wrapperCol: { span: 23 },
     };
 
+    console.log(this.props);
+
     return (
       <App>
         <div className="signup-page">
@@ -68,19 +84,38 @@ class SignupPage extends Component {
                 <Col>
                   <FormItem
                     {...formItemLayout}
+                    label="Username"
+                  >
+                    {getFieldDecorator('username', {
+                      initialValue: '',
+                      rules: [{
+                        required: true,
+                        message: 'This field cannot be empty.'
+                      }]
+                    })(
+                      <Input placeholder="Username" />
+                    )}
+                  </FormItem>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <FormItem
+                    {...formItemLayout}
                     label="Email"
                   >
                     {getFieldDecorator('email', {
                       initialValue: '',
                       rules: [{
                         required: true,
-                        message: 'Este campo no puede estar vacio.'
+                        message: 'This field cannot be empty.'
                       }, {
                         type: 'email',
-                        message: 'Ingresa un email válido'
+                        message: 'Insert a valid email'
                       }]
                     })(
-                      <Input />
+                      <Input placeholder="set an email" />
                     )}
                   </FormItem>
                 </Col>
@@ -96,10 +131,10 @@ class SignupPage extends Component {
                       initialValue: '',
                       rules: [{
                         required: true,
-                        message: 'Este campo no puede estar vacio.'
+                        message: 'This field cannot be empty.'
                       }]
                     })(
-                      <Input type="password" />
+                      <Input type="password" placeholder="set your password" />
                     )}
                   </FormItem>
                 </Col>
