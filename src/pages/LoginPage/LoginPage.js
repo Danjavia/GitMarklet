@@ -26,6 +26,22 @@ import './LoginPage.css';
 class LoginPage extends Component {
 
   /**
+   * handleSubmit
+   * Send data to server
+   * */
+  handleSubmit(e) {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (err) {
+        return;
+      }
+
+      console.log(values);
+    });
+  }
+
+  /**
    * render
    * @return {ReactElement} markup
    * */
@@ -46,7 +62,7 @@ class LoginPage extends Component {
           </nav>
 
           <div className="login-page__form">
-            <Form>
+            <Form layout="vertical" onSubmit={this.handleSubmit.bind(this)}>
               <h2>GitMarklet :: Easy Access</h2>
               <Row>
                 <Col>
@@ -91,7 +107,7 @@ class LoginPage extends Component {
 
               <Row>
                 <Col>
-                  <Button type="primary" htmlType="submit" size="large" icon="user">Entrar</Button>
+                  <Button type="primary" htmlType="submit" size="large" icon="unlock">Entrar</Button>
                   <Link to="/signup" style={{marginLeft: 10}}>Crear cuenta</Link>
                 </Col>
               </Row>
