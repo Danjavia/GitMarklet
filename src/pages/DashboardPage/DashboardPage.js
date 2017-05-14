@@ -9,6 +9,7 @@ import Card from 'antd/lib/card';
 import Tag from 'antd/lib/tag';
 import Icon from 'antd/lib/icon';
 import Affix from 'antd/lib/affix';
+import notification from 'antd/lib/notification';
 import StorageManager from '../../services/StorageManager';
 
 /**
@@ -121,8 +122,16 @@ export default class DashboardPage extends Component {
 
     mutate({variables}).then(({data}) => {
       console.log(data);
+      notification['success']({
+        message: 'Added to favorites.',
+        description: 'The repo has been added to your favorites.',
+      });
     }).catch((err) => {
       console.log(err);
+      notification['error']({
+        message: 'Upps, something happen.',
+        description: 'The repo cannot been added to your favorites.',
+      });
     });
   }
 
