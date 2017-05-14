@@ -80,7 +80,14 @@
   }
 
   &__tags {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
 
+    i {
+      cursor: pointer;
+      font-size: 16px;
+    }
   }
 
   &__user {

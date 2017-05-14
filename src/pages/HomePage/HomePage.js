@@ -128,6 +128,7 @@ export default class HomePage extends Component {
                         <div className="custom-card">
                           <div className="home-page__tags">
                             {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
+                            <Icon type="heart-o" />
                           </div>
                           <h3>
                             <a href={repo.url} target="_blank">{repo.name}</a>
