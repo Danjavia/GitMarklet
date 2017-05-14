@@ -48,7 +48,6 @@ class SignupPage extends Component {
 
       mutate({variables}).then(({data}) => {
         console.log(data);
-
         form.resetFields();
       }).catch((err) => {
         notification['error']({
