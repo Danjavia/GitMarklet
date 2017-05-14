@@ -2,13 +2,14 @@
  * External Resources
  **/
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import Input from 'antd/lib/input';
 import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
 import Tag from 'antd/lib/tag';
 import Icon from 'antd/lib/icon';
 import Affix from 'antd/lib/affix';
+import StorageManager from '../../services/StorageManager';
 
 /**
  * Internal Resources
@@ -19,7 +20,7 @@ import './HomePage.css';
 /**
  * Sample class definition
  **/
-export default class HomePage extends Component {
+class HomePage extends Component {
 
   constructor(props) {
     super(props);
@@ -31,6 +32,20 @@ export default class HomePage extends Component {
     }
   }
 
+  /**
+   * componentWillMount
+   * Self description
+   * */
+  componentWillMount() {
+    if (StorageManager.get('access_token')) {
+      this.props.history.push('dashboard');
+    }
+  }
+
+  /**
+   * searchRepos
+   * Search github repos via graphql api
+   * */
   searchRepos() {
 
     if (this.refs.gitUser.refs.input.value === '') {
@@ -128,7 +143,14 @@ export default class HomePage extends Component {
                         <div className="custom-card">
                           <div className="home-page__tags">
                             {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
-                            <Icon type="heart-o" />
+                            <Icon
+                              type="heart-o"
+                              onClick={() => {
+                                if (!StorageManager.get('access_token')) {
+                                  this.props.history.push('/login');
+                                }
+                              }}
+                            />
                           </div>
                           <h3>
                             <a href={repo.url} target="_blank">{repo.name}</a>
@@ -158,3 +180,5 @@ export default class HomePage extends Component {
     );
   }
 }
+
+export default withRouter(HomePage);
