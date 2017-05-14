@@ -63,7 +63,7 @@ class SignupPage extends Component {
 
           <div className="signup-page__form">
             <Form layout="vertical" onSubmit={this.handleSubmit.bind(this)}>
-              <h2>GitMarklet :: Easy Access</h2>
+              <h2>GitMarklet :: Early Access</h2>
               <Row>
                 <Col>
                   <FormItem
