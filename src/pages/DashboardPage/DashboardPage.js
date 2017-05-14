@@ -32,6 +32,16 @@ export default class DashboardPage extends Component {
     }
   }
 
+  /**
+   * componentWillMount
+   * Self descriptive
+   * */
+  componentWillMount() {
+    if (!StorageManager.get('access_token')) {
+      this.props.history.push('/login');
+    }
+  }
+
   searchRepos() {
 
     if (this.refs.gitUser.refs.input.value === '') {

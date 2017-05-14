@@ -34,7 +34,7 @@ class HomePage extends Component {
 
   /**
    * componentWillMount
-   * Self description
+   * Self descriptive
    * */
   componentWillMount() {
     if (StorageManager.get('access_token')) {
