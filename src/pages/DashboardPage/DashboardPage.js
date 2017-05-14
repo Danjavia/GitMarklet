@@ -139,7 +139,12 @@ export default class DashboardPage extends Component {
                         <div className="custom-card">
                           <div className="dashboard-page__tags">
                             {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
-                            <Icon type="heart-o" />
+                            <Icon
+                              type="heart-o"
+                              onClick={() => {
+                                console.log(repo);
+                              }}
+                            />
                           </div>
                           <h3>
                             <a href={repo.url} target="_blank">{repo.name}</a>

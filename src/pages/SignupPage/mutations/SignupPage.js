@@ -47,6 +47,7 @@ const signinUser = gql`
     ) {
       token
       user {
+        id
         username
       }
     }

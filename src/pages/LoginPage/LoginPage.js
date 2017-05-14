@@ -48,6 +48,7 @@ class LoginPage extends Component {
       mutate({variables}).then(({data}) => {
 
         StorageManager.update('access_token', data.signinUser.token);
+        StorageManager.update('uid', data.signinUser.user.id);
         this.props.history.push('/dashboard');
 
       }).catch((err) => {

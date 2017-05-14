@@ -127,6 +127,7 @@ class HomePage extends Component {
                 <Link to="/login">Login</Link>
               </nav>
               <h1>GitMarklet</h1>
+              <p>Insert a github username for getting his repositories.</p>
               <Input placeholder="Enter github username" ref="gitUser" />
               <Button onClick={this.searchRepos.bind(this)}>View Repositories</Button>
             </div>
