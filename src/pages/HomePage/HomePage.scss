@@ -6,6 +6,15 @@
     top: 30px;
     right: 100px;
     font-size: 16px;
+
+    a {
+      color: white;
+
+      &:hover,
+      &:active {
+        text-decoration: underline;
+      }
+    }
   }
 
   &__hero {
