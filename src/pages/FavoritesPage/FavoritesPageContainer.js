@@ -1,7 +1,6 @@
 /**
  * External resources
  * */
-import { withRouter } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import StorageManager from '../../services/StorageManager';
 
@@ -19,36 +18,33 @@ import FavoritesPage from './mutations/FavoritesPage';
  * BlackListButtonContainer
  * @const {func} BlackListButtonContainer Method for fetching data from server to the component.
  * */
-const BlackListButtonContainer = graphql(allFavorites, {
+const FavoritePageContainer = graphql(allFavorites, {
   name: 'allFavorites',
-  options: (ownProps) => {
-    console.log(ownProps, 'porper');
-    return {
-      variables: {
-        id: StorageManager.get('uid')
-      }
-    }
-  },
+  options: params => ({
+    variables: {
+      id: StorageManager.get('uid')
+    },
+  }),
   props: props => {
     console.log(props, 'props');
     return {
       subscribeToNewFavorites: params => {
-        console.log(params, 'params');
+        console.log(params, 'paramsss', allFavoritesSubscription, props);
         return props.allFavorites.subscribeToMore({
           document: allFavoritesSubscription,
           variables: {
-            id: StorageManager.get('uid'),
+            id: params.id,
           },
           updateQuery: (prev, {subscriptionData}) => {
             console.log(prev, subscriptionData, 'susss');
             if (!subscriptionData.data) {
               return prev;
             }
-            console.log(subscriptionData);
+            console.log(subscriptionData, 'suscriber');
             const newFeedItem = subscriptionData.data.commentAdded;
             return Object.assign({}, prev, {
               entry: {
-                favorites: [newFeedItem, ...prev.entry.comments]
+                allFavorites: [newFeedItem, ...prev.entry.comments]
               }
             });
           }
@@ -56,7 +52,7 @@ const BlackListButtonContainer = graphql(allFavorites, {
       }
     };
   },
-})(withRouter(FavoritesPage));
+})(FavoritesPage);
 
-export default BlackListButtonContainer;
+export default FavoritePageContainer;
 
