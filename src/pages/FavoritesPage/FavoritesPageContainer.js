@@ -10,7 +10,7 @@ import FavoritesPageQuery from './queries/FavoritesPageQuery';
 
 // Component
 // import BlackListButton from './mutations/BlackListButton';
-import FavoritesPage from './FavoritesPage';
+import FavoritesPage from './mutations/FavoritesPage';
 
 /**
  * BlackListButtonContainer

@@ -43,6 +43,10 @@ export default class DashboardPage extends Component {
     }
   }
 
+  /**
+   * searchRepos
+   * Search github repos via graphql api
+   * */
   searchRepos() {
 
     if (this.refs.gitUser.refs.input.value === '') {

@@ -51,7 +51,7 @@ class SignupPage extends Component {
         signinUser({variables}).then(({data}) => {
           StorageManager.update('access_token', data.signinUser.token);
           StorageManager.update('uid', data.signinUser.user.id);
-          this.props.history.push('/dashboard');
+          this.props.history.push('/favorites');
         });
 
       }).catch((err) => {

@@ -8,7 +8,9 @@ import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
 import Tag from 'antd/lib/tag';
 import Icon from 'antd/lib/icon';
+import notification from 'antd/lib/notification';
 import StorageManager from '../../services/StorageManager';
+import favoritesPageQuery from './queries/FavoritesPageQuery';
 
 /**
  * Internal Resources
@@ -41,6 +43,10 @@ class FavoritesPage extends Component {
     }
   }
 
+  /**
+   * searchRepos
+   * Search github repos via graphql api
+   * */
   searchRepos() {
 
     if (this.refs.gitUser.refs.input.value === '') {
@@ -107,6 +113,37 @@ class FavoritesPage extends Component {
   }
 
   /**
+   * removeFromFavorites
+   * Self descriptive
+   * */
+  removeFromFavorites(id) {
+    const {mutate} = this.props;
+    const variables = {
+      id
+    };
+
+    mutate({
+      variables,
+      refetchQueries: [{
+        query: favoritesPageQuery,
+        variables: {id: StorageManager.get('uid')}
+      }]
+    }).then(({data}) => {
+      console.log(data);
+      notification['success']({
+        message: 'Repo removed.',
+        description: 'The repo has been removed from your favorites.',
+      });
+    }).catch((err) => {
+      console.log(err);
+      notification['error']({
+        message: 'Upps, something happen.',
+        description: 'The repo cannot be removed from your favorites.',
+      });
+    });
+  }
+
+  /**
    * logout:
    * Finish user session
    * */
@@ -120,7 +157,6 @@ class FavoritesPage extends Component {
    * @return {ReactElement} markup
    * */
   render() {
-    const avatar = this.state.user && this.state.user.avatarUrl ? this.state.user.avatarUrl : 'https://s-media-cache-ak0.pinimg.com/originals/1c/7f/f6/1c7ff63a835410d8b31bce5f823cd401.jpg';
 
     if (this.props.data.loading) {
       return (<div className="flex"><h2>Loading your favorites...</h2></div>);
@@ -153,7 +189,10 @@ class FavoritesPage extends Component {
                     <div className="custom-card">
                       <div className="favorites-page__tags">
                         {repo.primaryLanguage && <Tag color={repo.primaryLanguage.color}>{repo.primaryLanguage.name}</Tag>}
-                        <Icon type="heart" />
+                        <Icon
+                          type="heart"
+                          onClick={this.removeFromFavorites.bind(this, repo.id)}
+                        />
                       </div>
                       <h3>
                         <a href={repo.url} target="_blank">{repo.name}</a>
