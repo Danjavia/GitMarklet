@@ -18,6 +18,10 @@
 
 # Installation
 
+```
+git clone https://github.com/Danjavia/frontest.git
+```
+
 Generate a github token with the following permissions.
  
 - user
@@ -36,7 +40,6 @@ after run the following commands in your terminal
 
 
 ```
-git clone https://github.com/Danjavia/frontest.git
 yarn install
 yarn start
 ```
