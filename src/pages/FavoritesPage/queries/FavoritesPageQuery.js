@@ -1,6 +1,27 @@
 import gql from 'graphql-tag';
 
-export default gql`
+const allFavoritesSubscription = gql`
+  subscription Favorites($id: ID!) {
+    Favorite(filter: {
+      mutation_in: [CREATED]
+      node: {
+        user: {
+          id: $id
+        }
+      }
+    }) {
+      mutation
+      node {
+        id
+        name
+        description
+        url
+      }
+    }
+  }
+`;
+
+const allFavorites = gql`
   query AllFavorites($id: ID!) {
     User(id: $id) {
       favorites(orderBy: createdAt_DESC) {
@@ -13,3 +34,8 @@ export default gql`
     }
   }
 `;
+
+export {
+  allFavoritesSubscription,
+  allFavorites
+}

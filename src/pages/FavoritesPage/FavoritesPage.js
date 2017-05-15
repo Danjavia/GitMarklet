@@ -3,14 +3,12 @@
  **/
 import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import Input from 'antd/lib/input';
-import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
 import Tag from 'antd/lib/tag';
 import Icon from 'antd/lib/icon';
 import notification from 'antd/lib/notification';
 import StorageManager from '../../services/StorageManager';
-import favoritesPageQuery from './queries/FavoritesPageQuery';
+import {allFavorites} from './queries/FavoritesPageQuery';
 
 /**
  * Internal Resources
@@ -41,6 +39,10 @@ class FavoritesPage extends Component {
     if (!StorageManager.get('access_token')) {
       this.props.history.push('/login');
     }
+
+    this.props.subscribeToNewFavorites({
+      id: StorageManager.get('uid'),
+    });
   }
 
   /**
@@ -124,7 +126,7 @@ class FavoritesPage extends Component {
     mutate({
       variables,
       refetchQueries: [{
-        query: favoritesPageQuery,
+        query: allFavorites,
         variables: {id: StorageManager.get('uid')}
       }]
     }).then(({data}) => {
@@ -157,11 +159,13 @@ class FavoritesPage extends Component {
    * */
   render() {
 
-    if (this.props.data.loading) {
+    console.log(this);
+
+    if (this.props.allFavorites.loading) {
       return (<div className="flex"><h2>Loading your favorites...</h2></div>);
     }
 
-    if (this.props.data.error) {
+    if (this.props.allFavorites.error) {
       return (<div>Upps, sorry the service is unavailable at this moment. Please check later.</div>);
     }
 
@@ -180,7 +184,7 @@ class FavoritesPage extends Component {
 
           <div className="favorites-page__results">
             <section className="favorites-page__repos">
-              {this.props.data.User.favorites.length > 0 ? this.props.data.User.favorites.map((repo, key) => {
+              {this.props.allFavorites.User.favorites.length > 0 ? this.props.allFavorites.User.favorites.map((repo, key) => {
                 return (
                   <Card style={{ width: '22.3%', margin: 10 }} bodyStyle={{ padding: 0 }} key={key}>
                     <div className="custom-card">
