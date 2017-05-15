@@ -165,7 +165,7 @@ class FavoritesPage extends Component {
     if (this.props.data.error) {
       return (<div>Upps, sorry the service is unavailable at this moment. Please check later.</div>);
     }
-
+    console.log(this.props);
     return (
       <App>
         <div className="favorites-page">
@@ -183,7 +183,7 @@ class FavoritesPage extends Component {
 
           <div className="favorites-page__results">
             <section className="favorites-page__repos">
-              {this.props.data.User.favorites ? this.props.data.User.favorites.map((repo, key) => {
+              {this.props.data.User.favorites.length > 0 ? this.props.data.User.favorites.map((repo, key) => {
                 return (
                   <Card style={{ width: '22.3%', margin: 10 }} bodyStyle={{ padding: 0 }} key={key}>
                     <div className="custom-card">
@@ -201,7 +201,7 @@ class FavoritesPage extends Component {
                     </div>
                   </Card>
                 );
-              }) : null}
+              }) : <div className="flex"><h2>No repositories yet, search and select one from the search form.</h2></div>}
             </section>
           </div>
         </div>
