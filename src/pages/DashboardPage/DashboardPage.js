@@ -11,6 +11,7 @@ import Icon from 'antd/lib/icon';
 import Affix from 'antd/lib/affix';
 import notification from 'antd/lib/notification';
 import StorageManager from '../../services/StorageManager';
+import favoritesPageQuery from '../FavoritesPage/queries/FavoritesPageQuery';
 
 /**
  * Internal Resources
@@ -103,7 +104,6 @@ export default class DashboardPage extends Component {
     }).then(response => {
       return response.json()
     }).then(res => {
-      console.log(res);
       this.setState({
         user: res.data ? res.data.user : null,
         repos: res.data && res.data.user && res.data.user.repositories ? res.data.user.repositories : [],
@@ -124,14 +124,18 @@ export default class DashboardPage extends Component {
       ...repo
     };
 
-    mutate({variables}).then(({data}) => {
-      console.log(data);
+    mutate({
+      variables,
+      refetchQueries: [{
+        query: favoritesPageQuery,
+        variables: {id: StorageManager.get('uid')}
+      }]
+    }).then(({data}) => {
       notification['success']({
         message: 'Added to favorites.',
         description: 'The repo has been added to your favorites.',
       });
     }).catch((err) => {
-      console.log(err);
       notification['error']({
         message: 'Upps, something happen.',
         description: 'The repo cannot been added to your favorites.',

@@ -103,7 +103,6 @@ class FavoritesPage extends Component {
     }).then(response => {
       return response.json()
     }).then(res => {
-      console.log(res);
       this.setState({
         user: res.data ? res.data.user : null,
         repos: res.data && res.data.user && res.data.user.repositories ? res.data.user.repositories : [],
@@ -165,7 +164,7 @@ class FavoritesPage extends Component {
     if (this.props.data.error) {
       return (<div>Upps, sorry the service is unavailable at this moment. Please check later.</div>);
     }
-    console.log(this.props);
+
     return (
       <App>
         <div className="favorites-page">
@@ -175,9 +174,7 @@ class FavoritesPage extends Component {
                 <Link to="/dashboard">Search Repos</Link>
                 <Link to="/" onClick={this.logout.bind(this)}>Logout</Link>
               </nav>
-              <h1>My Favorites</h1>
-              <Input placeholder="Enter repository name" ref="gitUser" />
-              <Button onClick={this.searchRepos.bind(this)}>Search Repositories</Button>
+              <h1 style={{textAlign: 'center'}}>My Favorite Repositories</h1>
             </div>
           </div>
 
@@ -201,7 +198,9 @@ class FavoritesPage extends Component {
                     </div>
                   </Card>
                 );
-              }) : <div className="flex"><h2>No repositories yet, search and select one from the search form.</h2></div>}
+              }) : <div className="flex">
+                <h2>No repositories yet, search and select one clicking on search repos button.</h2>
+              </div>}
             </section>
           </div>
         </div>
