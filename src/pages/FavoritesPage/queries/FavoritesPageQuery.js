@@ -10,12 +10,12 @@ const allFavoritesSubscription = gql`
         }
       }
     }) {
-      mutation
       node {
         id
         name
         description
         url
+        primaryLanguage
       }
     }
   }

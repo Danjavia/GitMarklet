@@ -8,7 +8,7 @@ import Tag from 'antd/lib/tag';
 import Icon from 'antd/lib/icon';
 import notification from 'antd/lib/notification';
 import StorageManager from '../../services/StorageManager';
-import {allFavorites} from './queries/FavoritesPageQuery';
+import {allFavorites, allFavoritesSubscription} from './queries/FavoritesPageQuery';
 
 /**
  * Internal Resources
@@ -39,9 +39,23 @@ class FavoritesPage extends Component {
     if (!StorageManager.get('access_token')) {
       this.props.history.push('/login');
     }
+  }
 
-    this.props.subscribeToNewFavorites({
-      id: StorageManager.get('uid'),
+  /**
+   * componentWillReceiveProps
+   * Self descriptive
+   * */
+  componentWillReceiveProps(nextProps) {
+    nextProps.allFavorites.subscribeToMore({
+      document: allFavoritesSubscription,
+      variables: {
+        id: StorageManager.get('uid'),
+      },
+      // this is where the magic happens.
+      updateQuery: (previousState, {subscriptionData}) => {
+        this.props.allFavorites.refetch();
+      },
+      onError: (err) => console.error(err),
     });
   }
 
@@ -158,9 +172,6 @@ class FavoritesPage extends Component {
    * @return {ReactElement} markup
    * */
   render() {
-
-    console.log(this);
-
     if (this.props.allFavorites.loading) {
       return (<div className="flex"><h2>Loading your favorites...</h2></div>);
     }
